@@ -34,13 +34,17 @@ class HabitCalendar extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = `
             .ContributionCalendar-day {
-                transition: background-color 0.3s;
+                transition: background-color 1.0s;
+                width: 10px;
+                height: 10px;
+                border-radius: 4px;
+                background-color: white;
             }
             .ContributionCalendar-day:hover {
-                background-color: lightblue; /* Hover color */
+                background-color: #efd9ce; /* Hover color */
             }
             .clicked {
-                background-color: blue; /* Clicked color */
+                background-color: #efd9ce; /* Clicked color */
             }
         `;
         this.shadowRoot.appendChild(style);
@@ -50,15 +54,17 @@ class HabitCalendar extends HTMLElement {
             for (let j = 0; j < 52; j++) { // For each week
                 const cell = document.createElement('td');
                 cell.className = 'ContributionCalendar-day';
-                cell.style.width = '10px';
-                cell.style.height = '10px';
-                cell.style.backgroundColor = 'white';
 
                 // Add click effect
-                cell.addEventListener('click', () => {
+                cell.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent event bubbling
                     cell.classList.add('clicked'); // Mark as clicked
+                    console.log('Cell clicked:', cell); // Debugging log
                 });
 
+                // Debugging: Confirm event listener is added
+                console.log('Event listener added to cell:', cell);
+                
                 // Add any necessary attributes or data here
                 row.appendChild(cell);
             }
