@@ -1,7 +1,11 @@
 class HabitCalendar extends HTMLElement {
     constructor() {
         super();
+
         this.attachShadow({ mode: 'open' });
+        this.color = this.getAttribute('color');
+        this.cardId = this.getAttribute('cardId');
+
         this.createTable();
     }
 
@@ -34,20 +38,23 @@ class HabitCalendar extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = `
             .ContributionCalendar-day {
-                transition: background-color 1.0s;
+                transition: background-color 0.3s;
                 width: 10px;
                 height: 10px;
                 border-radius: 4px;
                 background-color: white;
             }
             .ContributionCalendar-day:hover {
-                background-color: #efd9ce; /* Hover color */
+                background-color: ${this.color}; /* Hover color */
             }
             .clicked {
-                background-color: #efd9ce; /* Clicked color */
+                background-color: ${this.color}; /* Clicked color */
             }
         `;
         this.shadowRoot.appendChild(style);
+
+        // Load state from localStorage using a unique key for each card
+        const savedState = JSON.parse(localStorage.getItem(`habitCalendarState-${this.cardId}`)) || {};
 
         for (let i = 0; i < 7; i++) { // For each day of the week
             const row = document.createElement('tr');
@@ -55,16 +62,21 @@ class HabitCalendar extends HTMLElement {
                 const cell = document.createElement('td');
                 cell.className = 'ContributionCalendar-day';
 
+                // Check if the cell was previously clicked
+                if (savedState[`${i}-${j}`]) {
+                    cell.classList.add('clicked'); // Restore clicked state
+                }
+
                 // Add click effect
                 cell.addEventListener('click', (event) => {
                     event.stopPropagation(); // Prevent event bubbling
-                    cell.classList.add('clicked'); // Mark as clicked
-                    console.log('Cell clicked:', cell); // Debugging log
+                    cell.classList.toggle('clicked'); // Toggle clicked state
+
+                    // Save the state in localStorage using the unique key
+                    savedState[`${i}-${j}`] = cell.classList.contains('clicked');
+                    localStorage.setItem(`habitCalendarState-${this.cardId}`, JSON.stringify(savedState));
                 });
 
-                // Debugging: Confirm event listener is added
-                console.log('Event listener added to cell:', cell);
-                
                 // Add any necessary attributes or data here
                 row.appendChild(cell);
             }

@@ -1,23 +1,28 @@
 class HabitCard extends HTMLElement {
     constructor() {
       super(); // Always call super() in the constructor.
-  
+      this.title = this.getAttribute('title');
+      this.description = this.getAttribute('description');
       // Attach a shadow DOM
       const shadow = this.attachShadow({ mode: 'open' });
-  
+        
+      const color = this.getAttribute('color') || '#efd9ce';
+
       // Create the card container
       const card = document.createElement('div');
       card.setAttribute('class', 'card');
   
       // Add title and description
       const title = document.createElement('h2');
-      title.textContent = this.getAttribute('title');
+      title.textContent = this.title;
       
       const description = document.createElement('p');
-      description.textContent = this.getAttribute('description');
+      description.textContent = this.description;
 
       const calendar = document.createElement('habit-calendar');
       calendar.setAttribute('class', 'calendar');
+      calendar.setAttribute('color', color);
+      calendar.setAttribute('cardId', this.title);
   
       // Create a container for title and description
       const titleDescriptionContainer = document.createElement('div');
