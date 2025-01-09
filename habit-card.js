@@ -23,6 +23,8 @@ class HabitCard extends HTMLElement {
       calendar.setAttribute('class', 'calendar');
       calendar.setAttribute('color', color);
       calendar.setAttribute('cardId', this.title);
+      calendar.style.margin = '0 auto';
+      calendar.style.display = 'block';
   
       // Create a container for title and description
       const titleDescriptionContainer = document.createElement('div');
@@ -43,16 +45,18 @@ class HabitCard extends HTMLElement {
           display: flex;
           flex-direction: column; /* Stack items vertically */
           background-color: #efd9ce;
-          margin: 16px; /* Add margin around the card */
-
+          margin: 32px; /* Add margin around the card */
+          border-radius: 8px;
+          align-items: center; /* Center items horizontally */
         }
         .title-description {
           display: flex; /* Use flexbox for title and description */
           align-items: left; /* Center items vertically */
+          padding: 16px;
           justify-content: space-between; /* Space between title and description */
         }
         .title-description h2 {
-          margin: 0 8px 0 0; /* Add margin to the right */
+          margin: 0 4px 0 0; /* Add margin to the right */
           font-size: 18px;
           color: #333;
         }

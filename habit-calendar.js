@@ -16,6 +16,8 @@ class HabitCalendar extends HTMLElement {
         table.style.borderSpacing = '3px';
         table.style.overflow = 'hidden';
         table.style.position = 'relative';
+        table.style.margin = '0 auto';
+        table.style.display = 'block';
 
         // Create table header
         const thead = document.createElement('thead');
@@ -49,6 +51,13 @@ class HabitCalendar extends HTMLElement {
             }
             .clicked {
                 background-color: ${this.color}; /* Clicked color */
+            }
+            .calendar {
+                border-radius: 8px;
+                margin: 0 auto; /* Center horizontally */
+                display: block; /* Ensure it behaves as a block element */
+                max-width: 100%; /* Optional: limit the width */
+                border: 5px solid black;
             }
         `;
         this.shadowRoot.appendChild(style);
