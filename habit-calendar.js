@@ -41,8 +41,8 @@ class HabitCalendar extends HTMLElement {
         style.textContent = `
             .ContributionCalendar-day {
                 transition: background-color 0.3s;
-                width: 10px;
-                height: 10px;
+                width: 12px;
+                height: 12px;
                 border-radius: 4px;
                 background-color: white;
             }
